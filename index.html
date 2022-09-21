@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Report</title>
+
+    <link rel="stylesheet" href="./assets/css/weather-icons.min.css">
+    <script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+<h1>Current Weather</h1>
+</header>
+
+<main>
+    <aside>
+        <div id="search-card">
+            <div class="card-header">
+                <h2>City lookup</h2>
+            </div>
+            <label for="city-search">Lookup by city & state (city, state)</label></br>
+            <input id="city-search">
+            <button id="search-btn">Lookup</button>
+        </div>
+        <div id="prev-card">
+            <div class="card-header">
+                <h2>Previous Searches</h2>
+            </div>
+            <secion id="prev-section">
+                <ul id="prev-list">
+
+                </ul>
+            </secion>
+
+        </div>
+    </aside>
+
+    <div class="data-container">
+        <div class="card-header">
+            <h2>Current Weather</h2>
+        </div>
+        <section id="current-weather">
+            <p>Temperature: <span id="current-temp"></span></p>
+            <p>Wind: <span id="current-wind"></span></p>
+            <p>Humidity: <span id="current-humidity"></span></p>
+            <p>UV Index: <span id="current-UV"></span></p>
+            <p id="see-more"><a onclick="seeMore()">See More...</a></p>
+        </section>
+        <section id="current-icon">
+            <i class="wi wi-night-sleet"></i>
+        </section>
+        <section id="5-day">
+            <h2>5-day Forecast</h2>
+            <section id="days">
+
+            </section>
+        </section>
+    </div>
+
+</main>
+
+<footer>
+
+</footer>
+
+<script src="./assets/script.js""></script>
+</body>    
+</html>
