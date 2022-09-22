@@ -1,0 +1,13 @@
+:root{
+    --primary: #1abcbf;
+    --info:  #24232f;
+    --success: #3db371;
+    --warning: #baa339;
+    --danger: #f44336;
+
+    --lshade: #F0E9D3;
+    --laccent: #83A08D;
+    --mbc: #1ABCBF;
+    --daccent: #90715B;
+    --dshade: #24232F;
+}
