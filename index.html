@@ -14,6 +14,7 @@
   src="https://code.jquery.com/jquery-3.6.1.min.js"
   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
   crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
 <header>
@@ -42,7 +43,6 @@
                 <div id="prev-section" class="tile is-child">
                     <p class="subtitle">Previous Searches</p>
                     <ul id="prev-list">
-                        <li>Prev Search</li>
                     </ul>
                 </div>
             </section>
@@ -60,9 +60,18 @@
                 <p id="see-more"><a onclick="seeMore()">See More...</a></p>
                 <section id="5-day" class="is-child box">
                     <h2>5-day Forecast</h2>
-                    <section id="days">
-                        days here
-                    </section>
+                    <table class="table has-text-centered is-narrow">
+                    <tr>
+                      <th></th>
+                      <th>Day</th>
+                      <th>Temperature</th>
+                      <th>Description</th>
+                      <th>humidity</th>
+                    </tr>
+                    <tbody id="days">
+
+                    </tbody>
+                    </table>
                 </section>
             </section>
 

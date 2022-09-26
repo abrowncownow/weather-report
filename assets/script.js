@@ -1,14 +1,16 @@
 //Declare Variables/constants
 const APIKey = "f64ce8261e64b0aec0696a661e821205"
-var city;
+const APIKey2 = "f4de48db09946ff80425ecc37245dbb1"
+var city = "";
 var lat;
 var lon;
 var units;
 var exclude;
 var data;
 var current;
-var forecastData;
+var data;
 var forecast;
+var saved;
 var geocode = [];
 units = "imperial";
 //End Variables/constants
@@ -26,29 +28,17 @@ function convert(){
             console.log(lon);
             getWeather();
         })
-        .catch((error)=>console.log("Error: " + error));
+        .catch((error)=>alert("Enter a valid City, State" + "\nError: " + error));
 }
 
 function getWeather(){
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&units=" + units; 
+    var queryURL = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alert&appid=" + APIKey2 + "&units=" + units; 
     fetch(queryURL)
         .then((response)=>response.json())
         .then((json)=>{
             console.log(json);
             data = json;
             displayCurrent();
-            getForecast();
-        })
-        .catch((error)=>console.log("Error: " + error));
-}
-
-function getForecast(){
-    var forecastURL= "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon +"&appid=" + APIKey + "&units=" + units; 
-    fetch(forecastURL)
-        .then((response)=>response.json())
-        .then((fcast)=>{
-            console.log(fcast);
-            forecastData = fcast;
             displayForecast();
         })
         .catch((error)=>console.log("Error: " + error));
@@ -56,18 +46,18 @@ function getForecast(){
 
 function displayCurrent(){
 current ={
-    desc: data.weather[0].description,
-    temp: data.main.temp,
-    wind: data.wind.speed,
-    humid: data.main.humidity,
+    desc: data.current.weather[0].description,
+    temp: data.current.temp,
+    wind: data.current.wind_speed,
+    humid: data.current.humidity,
     name: data.name,
     icon: data.weather[0].icon,
-    date: moment.unix(data.dt).format("dddd MMM, Do YYYY"),
+    date: moment.unix(data.current.dt).format("dddd MMM, Do YYYY hh"),
 }
 $("#current-date").text(current.date);
 $("#current-desc").text(current.desc);
-$("#current-temp").text(current.temp);
-$("#current-humidity").text(current.humid);
+$("#current-temp").text(current.temp + "°");
+$("#current-humidity").text(current.humid+"%");
 $("#city").text(current.name);
 $("#current-icon").attr("src", "http://openweathermap.org/img/wn/" + current.icon + "@2x.png");
 $("#current-weather").show();
@@ -77,50 +67,71 @@ $("#current-weather").show();
 
 function displayForecast(){
     forecast=[{
-        desc: forecastData.list[0].weather[0].description,
-        temp: forecastData.list[0].main.temp,
-        wind: forecastData.list[0].wind.speed,
-        humid: forecastData.list[0].main.humidity,
-        name: forecastData.list[0].name,
-        icon: forecastData.list[0].weather[0].icon,
-        date: forecastData.list[0].dt,
+        desc: data.daily[0].weather[0].description,
+        temp: data.daily[0].temp.day,
+        wind: data.daily[0].wind_speed,
+        humid: data.daily[0].humidity,
+        icon: data.daily[0].weather[0].icon,
+        date: moment.unix(data.daily[0].dt).format("dddd")
     },{
-        desc: forecastData.list[1].weather[0].description,
-        temp: forecastData.list[1].main.temp,
-        wind: forecastData.list[1].wind.speed,
-        humid: forecastData.list[1].main.humidity,
-        name: forecastData.list[1].name,
-        icon: forecastData.list[1].weather[0].icon,
-        date: forecastData.list[1].dt,
+        desc: data.daily[1].weather[0].description,
+        temp: data.daily[1].temp.day,
+        wind: data.daily[1].wind_speed,
+        humid: data.daily[1].humidity,
+        icon: data.daily[1].weather[0].icon,
+        date: moment.unix(data.daily[1].dt).format("dddd")
     },{
-        desc: forecastData.list[2].weather[0].description,
-        temp: forecastData.list[2].main.temp,
-        wind: forecastData.list[2].wind.speed,
-        humid: forecastData.list[2].main.humidity,
-        name: forecastData.list[2].name,
-        icon: forecastData.list[2].weather[0].icon,
-        date: forecastData.list[2].dt,
+        desc: data.daily[2].weather[0].description,
+        temp: data.daily[2].temp.day,
+        wind: data.daily[2].wind_speed,
+        humid: data.daily[2].humidity,
+        icon: data.daily[2].weather[0].icon,
+        date: moment.unix(data.daily[2].dt).format("dddd")
     },{
-        desc: forecastData.list[3].weather[0].description,
-        temp: forecastData.list[3].main.temp,
-        wind: forecastData.list[3].wind.speed,
-        humid: forecastData.list[3].main.humidity,
-        name: forecastData.list[3].name,
-        icon: forecastData.list[3].weather[0].icon,
-        date: forecastData.list[3].dt,
+        desc: data.daily[3].weather[0].description,
+        temp: data.daily[3].temp.day,
+        wind: data.daily[3].wind_speed,
+        humid: data.daily[3].humidity,
+        icon: data.daily[3].weather[0].icon,
+        date: moment.unix(data.daily[3].dt).format("dddd")
     },{
-        desc: forecastData.list[4].weather[0].description,
-        temp: forecastData.list[4].main.temp,
-        wind: forecastData.list[4].wind.speed,
-        humid: forecastData.list[4].main.humidity,
-        name: forecastData.list[4].name,
-        icon: forecastData.list[4].weather[0].icon,
-        date: forecastData.list[4].dt,
+        desc: data.daily[4].weather[0].description,
+        temp: data.daily[4].temp.day,
+        wind: data.daily[4].wind_speed,
+        humid: data.daily[4].humidity,
+        icon: data.daily[4].weather[0].icon,
+        date: moment.unix(data.daily[4].dt).format("dddd")
     }]
     console.log(forecast);
+    for (i=0;i<5;i++){
+    $('#days').append(`<tr>
+    <td><img src="http://openweathermap.org/img/wn/` + forecast[i].icon + `@2x.png"></td>
+    <td>`+ forecast[i].date +`</td>
+    <td>`+ forecast[i].temp + "°"+`</td>
+    <td>`+ forecast[i].desc + `</td>
+    <td>`+ forecast[i].humid + "%"+ `<td>
+    </tr>`)}
 }
+
+function start(){
+    if (saved){saved.push(city);}
+    else{saved=[city];}
+    console.log(saved);
+    $("#prev-list").append(`<li>` + city + `</li>`);
+    localStorage.setItem("previous-search", JSON.stringify(saved));
+    $("#city-search").val("");
+    convert();
+}
+
 function init(){
     $("#current-weather").hide();
+    saved = JSON.parse(localStorage.getItem("previous-search"));
+    if (saved){
+        for (i=0;i<saved.length; i++){
+            $('#prev-list').append(`<li>` + saved[i] + `</li>`);
+        }
+    }
+
 }
 //End Functions Declaration
 
@@ -128,12 +139,22 @@ function init(){
 init();
 //
 
-//Listeners
+//listeners
+$(document).on('keypress',function(e) {
+    if((e.which == 13)&&($('#city-search').val)) {
+        e.preventDefault();
+        city = $("#city-search").val();
+        start();
+    }
+});
 $("#search-btn").click(function(event){
     event.preventDefault();
     city = $("#city-search").val();
-    console.log(city)
-    $("#city-search").text("");
-    convert();
+    start();
+});
+$('li').click(function(event){
+    event.preventDefault();
+    city=$(this).text();
+    start();
 })
-//End Listeners
+//End listeners

@@ -11,3 +11,7 @@
     --daccent: #90715B;
     --dshade: #24232F;
 }
+
+li:hover{
+    background-color: aquamarine;
+}
