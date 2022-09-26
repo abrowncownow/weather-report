@@ -71,6 +71,8 @@ $("#current-humidity").text(current.humid);
 $("#city").text(current.name);
 $("#current-icon").attr("src", "http://openweathermap.org/img/wn/" + current.icon + "@2x.png");
 $("#current-weather").show();
+
+
 }
 
 function displayForecast(){
@@ -90,10 +92,32 @@ function displayForecast(){
         name: forecastData.list[1].name,
         icon: forecastData.list[1].weather[0].icon,
         date: forecastData.list[1].dt,
-    }
-
-
-    ]
+    },{
+        desc: forecastData.list[2].weather[0].description,
+        temp: forecastData.list[2].main.temp,
+        wind: forecastData.list[2].wind.speed,
+        humid: forecastData.list[2].main.humidity,
+        name: forecastData.list[2].name,
+        icon: forecastData.list[2].weather[0].icon,
+        date: forecastData.list[2].dt,
+    },{
+        desc: forecastData.list[3].weather[0].description,
+        temp: forecastData.list[3].main.temp,
+        wind: forecastData.list[3].wind.speed,
+        humid: forecastData.list[3].main.humidity,
+        name: forecastData.list[3].name,
+        icon: forecastData.list[3].weather[0].icon,
+        date: forecastData.list[3].dt,
+    },{
+        desc: forecastData.list[4].weather[0].description,
+        temp: forecastData.list[4].main.temp,
+        wind: forecastData.list[4].wind.speed,
+        humid: forecastData.list[4].main.humidity,
+        name: forecastData.list[4].name,
+        icon: forecastData.list[4].weather[0].icon,
+        date: forecastData.list[4].dt,
+    }]
+    console.log(forecast);
 }
 function init(){
     $("#current-weather").hide();
