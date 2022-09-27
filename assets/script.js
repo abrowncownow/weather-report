@@ -27,12 +27,13 @@ function convert(){
             console.log(lat);
             console.log(lon);
             getWeather();
+            getForecast();
         })
         .catch((error)=>alert("Enter a valid City, State" + "\nError: " + error));
 }
 
 function getWeather(){
-    var queryURL = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alert&appid=" + APIKey2 + "&units=" + units; 
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&units=" + units; 
     fetch(queryURL)
         .then((response)=>response.json())
         .then((json)=>{
@@ -43,16 +44,29 @@ function getWeather(){
         })
         .catch((error)=>console.log("Error: " + error));
 }
+function getForecast(){
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&units=" + units; 
+    fetch(queryURL)
+        .then((response)=>response.json())
+        .then((json)=>{
+            console.log(json);
+            forecast = json;
+            displayForecast();
+        })
+        .catch((error)=>console.log("Error: " + error));
+}
+
+
 
 function displayCurrent(){
 current ={
-    desc: data.current.weather[0].description,
-    temp: data.current.temp,
-    wind: data.current.wind_speed,
-    humid: data.current.humidity,
+    desc: data.weather[0].description,
+    temp: data.main.temp,
+    wind: data.wind.speed,
+    humid: data.main.humidity,
     name: data.name,
     icon: data.weather[0].icon,
-    date: moment.unix(data.current.dt).format("dddd MMM, Do YYYY hh"),
+    date: moment.unix(data.dt).format("dddd MMM, Do YYYY"),
 }
 $("#current-date").text(current.date);
 $("#current-desc").text(current.desc);
@@ -67,40 +81,40 @@ $("#current-weather").show();
 
 function displayForecast(){
     forecast=[{
-        desc: data.daily[0].weather[0].description,
-        temp: data.daily[0].temp.day,
-        wind: data.daily[0].wind_speed,
-        humid: data.daily[0].humidity,
-        icon: data.daily[0].weather[0].icon,
-        date: moment.unix(data.daily[0].dt).format("dddd")
+        desc: forecast.list[5].weather[0].description,
+        temp: forecast.list[5].main.temp,
+        wind: forecast.list[5].wind.speed,
+        humid: forecast.list[5].main.humidity,
+        icon: forecast.list[5].weather[0].icon,
+        date: moment.unix(forecast.list[5].dt).format("dddd")
     },{
-        desc: data.daily[1].weather[0].description,
-        temp: data.daily[1].temp.day,
-        wind: data.daily[1].wind_speed,
-        humid: data.daily[1].humidity,
-        icon: data.daily[1].weather[0].icon,
-        date: moment.unix(data.daily[1].dt).format("dddd")
+        desc: forecast.list[13].weather[0].description,
+        temp: forecast.list[13].main.temp,
+        wind: forecast.list[13].wind.speed,
+        humid: forecast.list[13].main.humidity,
+        icon: forecast.list[13].weather[0].icon,
+        date: moment.unix(forecast.list[13].dt).format("dddd")
     },{
-        desc: data.daily[2].weather[0].description,
-        temp: data.daily[2].temp.day,
-        wind: data.daily[2].wind_speed,
-        humid: data.daily[2].humidity,
-        icon: data.daily[2].weather[0].icon,
-        date: moment.unix(data.daily[2].dt).format("dddd")
+        desc: forecast.list[21].weather[0].description,
+        temp: forecast.list[21].main.temp,
+        wind: forecast.list[21].wind.speed,
+        humid: forecast.list[21].main.humidity,
+        icon: forecast.list[21].weather[0].icon,
+        date: moment.unix(forecast.list[21].dt).format("dddd")
     },{
-        desc: data.daily[3].weather[0].description,
-        temp: data.daily[3].temp.day,
-        wind: data.daily[3].wind_speed,
-        humid: data.daily[3].humidity,
-        icon: data.daily[3].weather[0].icon,
-        date: moment.unix(data.daily[3].dt).format("dddd")
+        desc: forecast.list[29].weather[0].description,
+        temp: forecast.list[29].main.temp,
+        wind: forecast.list[29].wind.speed,
+        humid: forecast.list[29].main.humidity,
+        icon: forecast.list[29].weather[0].icon,
+        date: moment.unix(forecast.list[29].dt).format("dddd")
     },{
-        desc: data.daily[4].weather[0].description,
-        temp: data.daily[4].temp.day,
-        wind: data.daily[4].wind_speed,
-        humid: data.daily[4].humidity,
-        icon: data.daily[4].weather[0].icon,
-        date: moment.unix(data.daily[4].dt).format("dddd")
+        desc: forecast.list[35].weather[0].description,
+        temp: forecast.list[35].main.temp,
+        wind: forecast.list[35].wind.speed,
+        humid: forecast.list[35].main.humidity,
+        icon: forecast.list[35].weather[0].icon,
+        date: moment.unix(forecast.list[35].dt).format("dddd")
     }]
     console.log(forecast);
     for (i=0;i<5;i++){
