@@ -18,7 +18,7 @@ units = "imperial";
 
 //Declare Functions>
 function convert(){
-    var geocodeURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + ",usa&appid=" + APIKey;
+    var geocodeURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + ",usa&appid=" + APIKey;
     fetch(geocodeURL)
         .then((response)=>response.json())
         .then((data)=>{
