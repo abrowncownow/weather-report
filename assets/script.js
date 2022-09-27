@@ -12,6 +12,7 @@ var data;
 var forecast;
 var saved;
 var geocode = [];
+var showFcast = false;
 units = "imperial";
 //End Variables/constants
 
@@ -24,10 +25,7 @@ function convert(){
             geocode=data[0];
             lat = geocode.lat;
             lon = geocode.lon;
-            console.log(lat);
-            console.log(lon);
             getWeather();
-            getForecast();
         })
         .catch((error)=>alert("Enter a valid City, State" + "\nError: " + error));
 }
@@ -37,10 +35,9 @@ function getWeather(){
     fetch(queryURL)
         .then((response)=>response.json())
         .then((json)=>{
-            console.log(json);
             data = json;
             displayCurrent();
-            displayForecast();
+            getForecast();
         })
         .catch((error)=>console.log("Error: " + error));
 }
@@ -49,8 +46,7 @@ function getForecast(){
     fetch(queryURL)
         .then((response)=>response.json())
         .then((json)=>{
-            console.log(json);
-            forecast = json;
+            forecast = json.list;
             displayForecast();
         })
         .catch((error)=>console.log("Error: " + error));
@@ -69,68 +65,73 @@ current ={
     date: moment.unix(data.dt).format("dddd MMM, Do YYYY"),
 }
 $("#current-date").text(current.date);
+$("#current-wind").text(current.wind + " mph");
 $("#current-desc").text(current.desc);
 $("#current-temp").text(current.temp + "°");
 $("#current-humidity").text(current.humid+"%");
 $("#city").text(current.name);
 $("#current-icon").attr("src", "http://openweathermap.org/img/wn/" + current.icon + "@2x.png");
 $("#current-weather").show();
-
-
 }
 
 function displayForecast(){
+    if(showFcast){
+        for (i=0;i<5;i++){
+            $('#'+i).remove();}
+    }
     forecast=[{
-        desc: forecast.list[5].weather[0].description,
-        temp: forecast.list[5].main.temp,
-        wind: forecast.list[5].wind.speed,
-        humid: forecast.list[5].main.humidity,
-        icon: forecast.list[5].weather[0].icon,
-        date: moment.unix(forecast.list[5].dt).format("dddd")
+        desc: forecast[5].weather[0].description,
+        temp: forecast[5].main.temp,
+        wind: forecast[5].wind.speed,
+        humid: forecast[5].main.humidity,
+        icon: forecast[5].weather[0].icon,
+        date: moment.unix(forecast[5].dt).format("dddd")
     },{
-        desc: forecast.list[13].weather[0].description,
-        temp: forecast.list[13].main.temp,
-        wind: forecast.list[13].wind.speed,
-        humid: forecast.list[13].main.humidity,
-        icon: forecast.list[13].weather[0].icon,
-        date: moment.unix(forecast.list[13].dt).format("dddd")
+        desc: forecast[13].weather[0].description,
+        temp: forecast[13].main.temp,
+        wind: forecast[13].wind.speed,
+        humid: forecast[13].main.humidity,
+        icon: forecast[13].weather[0].icon,
+        date: moment.unix(forecast[13].dt).format("dddd")
     },{
-        desc: forecast.list[21].weather[0].description,
-        temp: forecast.list[21].main.temp,
-        wind: forecast.list[21].wind.speed,
-        humid: forecast.list[21].main.humidity,
-        icon: forecast.list[21].weather[0].icon,
-        date: moment.unix(forecast.list[21].dt).format("dddd")
+        desc: forecast[21].weather[0].description,
+        temp: forecast[21].main.temp,
+        wind: forecast[21].wind.speed,
+        humid: forecast[21].main.humidity,
+        icon: forecast[21].weather[0].icon,
+        date: moment.unix(forecast[21].dt).format("dddd")
     },{
-        desc: forecast.list[29].weather[0].description,
-        temp: forecast.list[29].main.temp,
-        wind: forecast.list[29].wind.speed,
-        humid: forecast.list[29].main.humidity,
-        icon: forecast.list[29].weather[0].icon,
-        date: moment.unix(forecast.list[29].dt).format("dddd")
+        desc: forecast[29].weather[0].description,
+        temp: forecast[29].main.temp,
+        wind: forecast[29].wind.speed,
+        humid: forecast[29].main.humidity,
+        icon: forecast[29].weather[0].icon,
+        date: moment.unix(forecast[29].dt).format("dddd")
     },{
-        desc: forecast.list[35].weather[0].description,
-        temp: forecast.list[35].main.temp,
-        wind: forecast.list[35].wind.speed,
-        humid: forecast.list[35].main.humidity,
-        icon: forecast.list[35].weather[0].icon,
-        date: moment.unix(forecast.list[35].dt).format("dddd")
+        desc: forecast[35].weather[0].description,
+        temp: forecast[35].main.temp,
+        wind: forecast[35].wind.speed,
+        humid: forecast[35].main.humidity,
+        icon: forecast[35].weather[0].icon,
+        date: moment.unix(forecast[35].dt).format("dddd")
     }]
-    console.log(forecast);
     for (i=0;i<5;i++){
-    $('#days').append(`<tr>
-    <td><img src="http://openweathermap.org/img/wn/` + forecast[i].icon + `@2x.png"></td>
-    <td>`+ forecast[i].date +`</td>
-    <td>`+ forecast[i].temp + "°"+`</td>
-    <td>`+ forecast[i].desc + `</td>
-    <td>`+ forecast[i].humid + "%"+ `<td>
-    </tr>`)}
+        $('#days').append(`<tr id="` +i+`">
+        <td><img src="http://openweathermap.org/img/wn/` + forecast[i].icon + `@2x.png"></td>
+        <td>`+ forecast[i].date +`</td>
+        <td>`+ forecast[i].temp + "°"+`</td>
+        <td>`+ forecast[i].desc + `</td>
+        <td>`+ forecast[i].humid + "%"+ `<td>
+        </tr>`)}
+    $("#5-day").show();
+    showFcast = true;
 }
 
 function start(){
-    if (saved){saved.push(city);}
+    if (saved){
+        saved.push(city);
+    }
     else{saved=[city];}
-    console.log(saved);
     $("#prev-list").append(`<li>` + city + `</li>`);
     localStorage.setItem("previous-search", JSON.stringify(saved));
     $("#city-search").val("");
@@ -139,6 +140,7 @@ function start(){
 
 function init(){
     $("#current-weather").hide();
+    $("#5-day").hide();
     saved = JSON.parse(localStorage.getItem("previous-search"));
     if (saved){
         for (i=0;i<saved.length; i++){
