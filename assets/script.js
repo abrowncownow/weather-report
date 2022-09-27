@@ -70,7 +70,7 @@ $("#current-desc").text(current.desc);
 $("#current-temp").text(current.temp + "°");
 $("#current-humidity").text(current.humid+"%");
 $("#city").text(current.name);
-$("#current-icon").attr("src", "http://openweathermap.org/img/wn/" + current.icon + "@2x.png");
+$("#current-icon").attr("src", "https://openweathermap.org/img/wn/" + current.icon + "@2x.png");
 $("#current-weather").show();
 }
 
@@ -117,7 +117,7 @@ function displayForecast(){
     }]
     for (i=0;i<5;i++){
         $('#days').append(`<tr id="` +i+`">
-        <td><img src="http://openweathermap.org/img/wn/` + forecast[i].icon + `@2x.png"></td>
+        <td><img src="https://openweathermap.org/img/wn/` + forecast[i].icon + `@2x.png"></td>
         <td>`+ forecast[i].date +`</td>
         <td>`+ forecast[i].temp + "°"+`</td>
         <td>`+ forecast[i].desc + `</td>
