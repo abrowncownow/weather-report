@@ -19,7 +19,7 @@ Use the links below to navigate to different sections of the README.
 
 -   [Installation](#installation)
 -   [Usage](#usage)
--   [Known Bug](#known_bug)
+-   [Known Bug](#bug)
 -   [Credits](#credits)
 -   [License](#license)
 
@@ -31,7 +31,7 @@ Website deployed to web via github pages for public use. No installation necessa
 
 Navigate to page in browser. Enter a city and state in the lookup box. Push enter or click the lookup button. You may also click on a previously searched city. Site will update with current weather and 5-day forecast.
 
-## Known_Bug
+## Bug
 
 Clicking on a recently added search doesn't update current weather and 5-day forecast. Correct this by reloading the page.
 
