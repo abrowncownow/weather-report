@@ -1,4 +1,4 @@
-# weather-report
+# Weather Report
 
 ![Weather Report](./assets/images/Weather_demo.gif)
 
